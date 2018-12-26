@@ -42,11 +42,7 @@ namespace Project.WebApi.Controllers
                 var response = _mapper.Map<List<PlanetForGetViewModel>>(planets);
 
                 foreach (var planet in response)
-                {
-                    var swApiObj = (RootObject) JsonConvert.DeserializeObject<RootObject>(_swApiConnector.GetAllMovieApparitionsByPlanet(planet.Name));
-
-                    planet.TotalMovieApparitions = swApiObj.results[0].films.Count;
-                }
+                    SetTotalMovieApparitionsOfThePlanet(planet);
 
                 return Ok(response);
             }
@@ -54,6 +50,15 @@ namespace Project.WebApi.Controllers
             {
                 return StatusCode(500, "Internal server error.");
             }
+        }
+
+        private void SetTotalMovieApparitionsOfThePlanet(PlanetForGetViewModel planet)
+        {
+            var swApiResponseData = (RootObject)JsonConvert.DeserializeObject<RootObject>(_swApiConnector.GetAllMovieApparitionsByPlanet(planet.Name));
+
+            planet.TotalMovieApparitions = (swApiResponseData.results.Count > 0)
+                ? swApiResponseData.results[0].films.Count
+                : 0;
         }
 
         [HttpGet]
@@ -72,6 +77,8 @@ namespace Project.WebApi.Controllers
 
                 var response = _mapper.Map<PlanetForGetViewModel>(planet);
 
+                SetTotalMovieApparitionsOfThePlanet(response);
+
                 return Ok(response);
             }
             catch (Exception ex)
@@ -81,7 +88,7 @@ namespace Project.WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("getByName/{name}")]
+        [Route("getByName/{planetName}")]
         public IActionResult GetPlanetByName([FromRoute] string planetName)
         {
             try
@@ -95,6 +102,8 @@ namespace Project.WebApi.Controllers
                     return NotFound();
 
                 var response = _mapper.Map<PlanetForGetViewModel>(planet);
+
+                SetTotalMovieApparitionsOfThePlanet(response);
 
                 return Ok(response);
             }
