@@ -39,7 +39,7 @@ namespace Project.Repository.Repositories.Common
             await db.SaveChangesAsync();
         }
 
-        public virtual TEntity GetByNameAsync(string name)
+        public virtual TEntity GetByNameAsync(string planetName)
         {
             throw new NotImplementedException();
         }

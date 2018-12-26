@@ -8,7 +8,7 @@ namespace Project.Domain.Contracts.Repositories.Common
     {
         Task AddAsync(TEntity obj);
         Task<IEnumerable<TEntity>> GetAllAsync();
-        TEntity GetByNameAsync(string name);
+        TEntity GetByNameAsync(string planetName);
         Task<TEntity> GetByIdAsync(Guid? id);        
         Task RemoveAsync(TEntity obj);        
     }

@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Project.IoC\Project.IoC.csproj" />
+    <ProjectReference Include="..\Project.RestfulConnector\Project.RestfulConnector.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Project.Domain.Contracts.Repositories;
 using Project.Domain.Entities;
+using Project.RestfulConnector.Contracts;
 using Project.WebApi.Models;
 using System;
 using System.Collections.Generic;
@@ -16,11 +18,13 @@ namespace Project.WebApi.Controllers
     public class PlanetsController : ControllerBase
     {
         private readonly IPlanetRepository _planetRepository;
+        private readonly ISwApiConnector _swApiConnector;
         private readonly IMapper _mapper;
 
-        public PlanetsController(IPlanetRepository planetRepository, IMapper mapper)
+        public PlanetsController(IPlanetRepository planetRepository, ISwApiConnector swApiConnector, IMapper mapper)
         {
             _planetRepository = planetRepository;
+            _swApiConnector = swApiConnector;
             _mapper = mapper;
         }
 
@@ -36,6 +40,13 @@ namespace Project.WebApi.Controllers
                     return NotFound();
 
                 var response = _mapper.Map<List<PlanetForGetViewModel>>(planets);
+
+                foreach (var planet in response)
+                {
+                    var swApiObj = (RootObject) JsonConvert.DeserializeObject<RootObject>(_swApiConnector.GetAllMovieApparitionsByPlanet(planet.Name));
+
+                    planet.TotalMovieApparitions = swApiObj.results[0].films.Count;
+                }
 
                 return Ok(response);
             }
@@ -71,14 +82,14 @@ namespace Project.WebApi.Controllers
 
         [HttpGet]
         [Route("getByName/{name}")]
-        public IActionResult GetPlanetByName([FromRoute] string name)
+        public IActionResult GetPlanetByName([FromRoute] string planetName)
         {
             try
             {
-                if (name == null)
+                if (planetName == null)
                     return BadRequest();
 
-                var planet = _planetRepository.GetByNameAsync(name);
+                var planet = _planetRepository.GetByNameAsync(planetName);
 
                 if (planet == null)
                     return NotFound();
