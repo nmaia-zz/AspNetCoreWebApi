@@ -8,8 +8,10 @@ namespace Project.WebApi.Mapper
     {
         public MappingProfile()
         {
-            CreateMap<PlanetViewModel, Planet>();
-            CreateMap<Planet, PlanetViewModel>();
+            CreateMap<PlanetForGetViewModel, Planet>();
+            CreateMap<Planet, PlanetForGetViewModel>();
+
+            CreateMap<PlanetForPostViewModel, Planet>();
         }
     }
 }

@@ -23,9 +23,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.Repository", "Proje
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2. Utils", "2. Utils", "{DDCE597E-748C-4ACF-AA2E-DD6FA64FC469}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.IoC", "Project.IoC\Project.IoC.csproj", "{999E86E8-ED0A-4170-9DDA-C2422D15DCD3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.IoC", "Project.IoC\Project.IoC.csproj", "{999E86E8-ED0A-4170-9DDA-C2422D15DCD3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Project.WebApi", "Project.WebApi\Project.WebApi.csproj", "{4CFD324A-951A-4468-AB8E-91A00A42EE20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project.WebApi", "Project.WebApi\Project.WebApi.csproj", "{4CFD324A-951A-4468-AB8E-91A00A42EE20}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

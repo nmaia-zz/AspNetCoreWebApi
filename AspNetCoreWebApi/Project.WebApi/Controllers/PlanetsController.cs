@@ -26,7 +26,7 @@ namespace Project.WebApi.Controllers
 
         [HttpGet]
         [Route("getAll")]
-        public async Task<ActionResult<IEnumerable<PlanetViewModel>>> GetAllPlanets()
+        public async Task<ActionResult<IEnumerable<PlanetForGetViewModel>>> GetAllPlanets()
         {
             try
             {
@@ -35,7 +35,7 @@ namespace Project.WebApi.Controllers
                 if (planets == null)
                     return NotFound();
 
-                var response = _mapper.Map<List<PlanetViewModel>>(planets);
+                var response = _mapper.Map<List<PlanetForGetViewModel>>(planets);
 
                 return Ok(response);
             }
@@ -59,7 +59,7 @@ namespace Project.WebApi.Controllers
                 if (planet == null)
                     return NotFound();
 
-                var response = _mapper.Map<PlanetViewModel>(planet);
+                var response = _mapper.Map<PlanetForGetViewModel>(planet);
 
                 return Ok(response);
             }
@@ -83,7 +83,7 @@ namespace Project.WebApi.Controllers
                 if (planet == null)
                     return NotFound();
 
-                var response = _mapper.Map<PlanetViewModel>(planet);
+                var response = _mapper.Map<PlanetForGetViewModel>(planet);
 
                 return Ok(response);
             }
@@ -95,7 +95,7 @@ namespace Project.WebApi.Controllers
 
         [HttpPost]
         [Route("create")]
-        public async Task<IActionResult> CreateNewPlanet([FromBody] PlanetViewModel model)
+        public async Task<IActionResult> CreateNewPlanet([FromBody] PlanetForPostViewModel model)
         {
             try
             {

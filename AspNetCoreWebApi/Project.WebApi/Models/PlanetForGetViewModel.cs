@@ -2,7 +2,7 @@
 
 namespace Project.WebApi.Models
 {
-    public class PlanetViewModel
+    public class PlanetForGetViewModel
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
