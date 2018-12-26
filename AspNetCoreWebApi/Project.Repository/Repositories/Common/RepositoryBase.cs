@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Project.Domain.Contracts.Common;
+using Project.Domain.Contracts.Repositories.Common;
 using Project.Repository.Context;
 using System;
 using System.Collections.Generic;
@@ -39,7 +39,7 @@ namespace Project.Repository.Repositories.Common
             await db.SaveChangesAsync();
         }
 
-        public virtual async Task<IEnumerable<TEntity>> GetByNameAsync(string name)
+        public virtual TEntity GetByNameAsync(string name)
         {
             throw new NotImplementedException();
         }

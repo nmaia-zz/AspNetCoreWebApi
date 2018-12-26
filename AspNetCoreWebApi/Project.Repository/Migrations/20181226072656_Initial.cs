@@ -20,6 +20,12 @@ namespace Project.Repository.Migrations
                 {
                     table.PrimaryKey("PK_Planets", x => x.Id);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Planets_Name",
+                table: "Planets",
+                column: "Name",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

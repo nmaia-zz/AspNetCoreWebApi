@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Project.Domain.Contracts;
+using Project.Domain.Contracts.Repositories;
 using Project.Repository.Repositories;
 
 namespace Project.IoC

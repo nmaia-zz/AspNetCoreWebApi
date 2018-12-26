@@ -38,6 +38,9 @@ namespace Project.Repository.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.ToTable("Planets");
                 });
 #pragma warning restore 612, 618

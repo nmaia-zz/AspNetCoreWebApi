@@ -24,6 +24,9 @@ namespace Project.Repository.Context
 
             modelBuilder.Entity<Planet>()
                 .HasKey(p => p.Id);
+
+            modelBuilder.Entity<Planet>()
+                .HasIndex(p => p.Name).IsUnique();
         }
         public DbSet<Planet> Planets { get; set; }
     }

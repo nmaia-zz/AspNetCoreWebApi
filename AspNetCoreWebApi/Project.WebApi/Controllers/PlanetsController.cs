@@ -1,54 +1,148 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Project.Domain.Contracts.Repositories;
+using Project.Domain.Entities;
 using Project.WebApi.Models;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Project.WebApi.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     public class PlanetsController : ControllerBase
     {
-        // GET api/values
+        private readonly IPlanetRepository _planetRepository;
+        private readonly IMapper _mapper;
+
+        public PlanetsController(IPlanetRepository planetRepository, IMapper mapper)
+        {
+            _planetRepository = planetRepository;
+            _mapper = mapper;
+        }
+
         [HttpGet]
         [Route("getAll")]
-        public async Task<ActionResult<IEnumerable<string>>> GetAllPlanets()
+        public async Task<ActionResult<IEnumerable<PlanetViewModel>>> GetAllPlanets()
         {
-            throw new NotImplementedException();
+            try
+            {
+                var planets = await _planetRepository.GetAllAsync();
+
+                if (planets == null)
+                    return NotFound();
+
+                var response = _mapper.Map<List<PlanetViewModel>>(planets);
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error.");
+            }
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        [Route("getById")]
-        public async Task<ActionResult<string>> GetPlanetById([FromBody] Guid id)
+        [HttpGet]
+        [Route("getById/{id}")]
+        public async Task<IActionResult> GetPlanetById([FromRoute] Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (id == null)
+                    return BadRequest();
+
+                var planet = await _planetRepository.GetByIdAsync(id);
+
+                if (planet == null)
+                    return NotFound();
+
+                var response = _mapper.Map<PlanetViewModel>(planet);
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error.");
+            }
         }
 
-        // GET api/values/5
-        [HttpGet("{name}")]
-        [Route("getByName")]
-        public async Task<ActionResult<string>> GetPlanetByName([FromBody] string name)
+        [HttpGet]
+        [Route("getByName/{name}")]
+        public IActionResult GetPlanetByName([FromRoute] string name)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (name == null)
+                    return BadRequest();
+
+                var planet = _planetRepository.GetByNameAsync(name);
+
+                if (planet == null)
+                    return NotFound();
+
+                var response = _mapper.Map<PlanetViewModel>(planet);
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error.");
+            }
         }
 
-        // POST api/values
         [HttpPost]
         [Route("create")]
-        public async Task CreateNewPlanet([FromBody] PlanetViewModel model)
+        public async Task<IActionResult> CreateNewPlanet([FromBody] PlanetViewModel model)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (!ModelState.IsValid)
+                    return BadRequest(ModelState);
+
+                if (model == null)
+                    return BadRequest();
+
+                var planet = _mapper.Map<Planet>(model);
+
+                await _planetRepository.AddAsync(planet);
+
+                return Ok();
+            }
+            catch (DbUpdateException ex)
+            {
+                return BadRequest("This planet already exists in database. Try another one.");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error.");
+            }
         }
 
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        [Route("remove")]
-        public async Task Delete([FromBody] Guid id)
+        [HttpDelete]
+        [Route("remove/{id}")]
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                if (id == null)
+                    return BadRequest();
+
+                var planet = await _planetRepository.GetByIdAsync(id);
+
+                if (planet == null)
+                    return NotFound();
+
+                await _planetRepository.RemoveAsync(planet);
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal server error.");
+            }
         }
     }
 }
