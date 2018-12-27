@@ -11,7 +11,7 @@ A sample project using Asp Net Core 2.1 WebApi and EF Core.
 
 ![Swagger](https://github.com/nmaia/AspNetCoreWebApi/blob/master/Docs/Images/postman.png)
 
-## Some stuff we've used in the project
+## Some stuff I've used in the project
 
 - Brotli Algorithm: to handle API response compression;
 - RestSharp: to connect with the external API [swApi.co](https://swapi.co)
@@ -20,3 +20,10 @@ A sample project using Asp Net Core 2.1 WebApi and EF Core.
 - AspNet Core 2.1;
 - EntityFramework Core;
 - SQL Server Express;
+
+## Things should be improved
+
+- Indentify more use cases to provide more unit tests;
+- Include an integration test to check the availability of the external API;
+- Refactor the way I've used RestSharp, there is a [better approach](https://github.com/restsharp/RestSharp/wiki/Recommended-Usage) to use it;
+- Include MongoDB in the project to improve database read/write performance.
