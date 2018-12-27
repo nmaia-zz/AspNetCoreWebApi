@@ -15,7 +15,11 @@ A sample project using Asp Net Core 2.1 WebApi and EF Core.
 
 - But if you want to use postman to test the project, you must turn off the SSL certificate validation in the postman settings section.
 
-![Swagger](https://github.com/nmaia/AspNetCoreWebApi/blob/master/Docs/Images/postman.png)
+![Postman](https://github.com/nmaia/AspNetCoreWebApi/blob/master/Docs/Images/postman.png)
+
+- Another tip to test via postman is to access API controller methods using the http following port. By default the solution is pointing to the https port.
+
+![http port](https://github.com/nmaia/AspNetCoreWebApi/blob/master/Docs/Images/http-https-port.png)
 
 ## Some stuff I've used in the project
 
