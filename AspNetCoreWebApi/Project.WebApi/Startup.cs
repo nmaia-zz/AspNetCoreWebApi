@@ -111,6 +111,13 @@ namespace Project.WebApi
 
             app.UseResponseCompression();
 
+            app.UseCors(c =>
+            {
+                c.AllowAnyHeader();
+                c.AllowAnyMethod();
+                c.AllowAnyOrigin();
+            });
+
             app.UseMvc();
         }
     }
