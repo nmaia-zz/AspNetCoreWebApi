@@ -1,6 +1,12 @@
 # AspNetCoreWebApi
 A sample project using Asp Net Core 2.1 WebApi and EF Core.
 
+## Running the solution
+
+- Before running the solution, is important to check if the Project.WebApi project is checked as Startup Project. If not, please, apply the following adjustment. Some times it is necessary when you download the project for the first time. It happend to me today! LoL
+
+![Set Startup Project](https://github.com/nmaia/AspNetCoreWebApi/blob/master/Docs/Images/setup-startup-project.png)
+
 ## Testing the project
 
 - I've setup swagger in order to deliver a friendly way to test the project. When you run it, the index page of the API is the swagger documentation.
