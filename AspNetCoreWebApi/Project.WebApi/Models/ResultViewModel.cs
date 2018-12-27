@@ -3,7 +3,10 @@ using System.Collections.Generic;
 
 namespace Project.WebApi.Models
 {
-    public class Result
+    /// <summary>
+    /// A View model that represents the external API response.
+    /// </summary>
+    public class ResultViewModel
     {
         public string name { get; set; }
         public string rotation_period { get; set; }

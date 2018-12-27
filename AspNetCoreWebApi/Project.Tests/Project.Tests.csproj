@@ -13,8 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="1. UnitTests\" />
-    <Folder Include="2. IntegrationTests\" />
+    <Folder Include="UnitTests\" />
+    <Folder Include="IntegrationTests\" />
   </ItemGroup>
 
 </Project>

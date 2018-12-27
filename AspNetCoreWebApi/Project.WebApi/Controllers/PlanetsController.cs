@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace Project.WebApi.Controllers
 {
+    /// <summary>
+    /// Planet Controller, responsible to deliver the methods to handle planets.
+    /// </summary>
     [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
@@ -21,6 +24,12 @@ namespace Project.WebApi.Controllers
         private readonly ISwApiConnector _swApiConnector;
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// Controller Constructor.
+        /// </summary>
+        /// <param name="planetRepository">IPlanetRepository planetRepository</param>
+        /// <param name="swApiConnector">ISwApiConnector swApiConnector</param>
+        /// <param name="mapper">IMapper mapper</param>
         public PlanetsController(IPlanetRepository planetRepository, ISwApiConnector swApiConnector, IMapper mapper)
         {
             _planetRepository = planetRepository;
@@ -28,8 +37,25 @@ namespace Project.WebApi.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Method to return all the registred planets.
+        /// </summary>
+        /// <remarks>
+        ///     Sample request:
+        ///     
+        ///         GET /getAll
+        ///         {}
+        ///         
+        /// </remarks>
+        /// <returns>IEnumerable of PlanetForGetViewModel</returns>
+        /// <response code="200">Returns all the Planets</response>
+        /// <response code="400">If the item is null</response>
+        /// <response code="500">Some internal error has occured in the server</response>
         [HttpGet]
         [Route("getAll")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
         public async Task<ActionResult<IEnumerable<PlanetForGetViewModel>>> GetAllPlanets()
         {
             try
@@ -52,17 +78,41 @@ namespace Project.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// This method is responsible to get the number of planet apparitions on the movies.
+        /// </summary>
+        /// <param name="planet">PlanetForGetViewModel planet</param>
         private void SetTotalMovieApparitionsOfThePlanet(PlanetForGetViewModel planet)
         {
-            var swApiResponseData = (RootObject)JsonConvert.DeserializeObject<RootObject>(_swApiConnector.GetAllMovieApparitionsByPlanet(planet.Name));
+            var swApiResponseData = (RootObjectViewModel)JsonConvert.DeserializeObject<RootObjectViewModel>(_swApiConnector.GetAllMovieApparitionsByPlanet(planet.Name));
 
             planet.TotalMovieApparitions = (swApiResponseData.results.Count > 0)
                 ? swApiResponseData.results[0].films.Count
                 : 0;
         }
 
+        /// <summary>
+        /// Method used to search a planet by Id.
+        /// </summary>
+        /// <remarks>
+        ///     Sample request:
+        ///     
+        ///         GET /getById/{id}
+        ///         {        
+        ///             'id': '70aca700-fbdd-4d4d-0900-08d66b7edd26'
+        ///         }
+        ///         
+        /// </remarks>
+        /// <param name="id">Guid id</param>
+        /// <returns>PlanetForGetViewModel</returns>
+        /// <response code="200">Returns a single Planet</response>
+        /// <response code="400">If the item is null</response>
+        /// <response code="500">Some internal error has occured in the server</response>
         [HttpGet]
         [Route("getById/{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
         public async Task<IActionResult> GetPlanetById([FromRoute] Guid id)
         {
             try
@@ -87,8 +137,28 @@ namespace Project.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Method used to search a Planet by name.
+        /// </summary>
+        /// <remarks>
+        ///     Sample request:
+        ///     
+        ///         GET /getByName/{planetName}
+        ///         {
+        ///             'planetName': 'Some name'
+        ///         }
+        /// 
+        /// </remarks>
+        /// <param name="planetName">string planetName</param>
+        /// <returns>PlanetForGetViewModel</returns>
+        /// <response code="200">Returns a single Planet</response>
+        /// <response code="400">If the item is null</response>
+        /// <response code="500">Some internal error has occured in the server</response>
         [HttpGet]
         [Route("getByName/{planetName}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
         public IActionResult GetPlanetByName([FromRoute] string planetName)
         {
             try
@@ -113,8 +183,30 @@ namespace Project.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Method used to regiser a new planet into database.
+        /// </summary>
+        /// <remarks>
+        ///     Sample request:
+        ///     
+        ///         POST /create
+        ///         {
+        ///             'name': 'Some name',
+        ///             'climate': 'One or many climates',
+        ///             'terrain': 'One or many terrains'
+        ///         }
+        ///         
+        /// </remarks>
+        /// <param name="model">PlanetForPostViewModel model</param>
+        /// <returns>HttpStatusCode</returns>
+        /// <response code="200">It means the Planet was registred successfully</response>
+        /// <response code="400">If the item is null</response>
+        /// <response code="500">Some internal error has occured in the server</response>
         [HttpPost]
         [Route("create")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
         public async Task<IActionResult> CreateNewPlanet([FromBody] PlanetForPostViewModel model)
         {
             try
@@ -141,8 +233,28 @@ namespace Project.WebApi.Controllers
             }
         }
 
+        /// <summary>
+        /// Method used to delete a planet from database.
+        /// </summary>
+        /// <remarks>
+        ///     Sample request:
+        ///     
+        ///         DELETE /remove/{id}
+        ///         {
+        ///             'id': '70aca700-fbdd-4d4d-0900-08d66b7edd26' 
+        ///         }
+        ///         
+        /// </remarks>
+        /// <param name="id">Guid id</param>
+        /// <returns>HttpStatusCode</returns>
+        /// <response code="200">It means the Planet was removed successfully</response>
+        /// <response code="400">If the item is null</response>
+        /// <response code="500">Some internal error has occured in the server</response>
         [HttpDelete]
         [Route("remove/{id}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             try
