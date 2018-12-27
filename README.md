@@ -17,7 +17,7 @@ A sample project using Asp Net Core 2.1 WebApi and EF Core.
 
 ![Postman](https://github.com/nmaia/AspNetCoreWebApi/blob/master/Docs/Images/postman.png)
 
-- Another tip to test via postman is to access API controller methods using the http following port. By default the solution is pointing to the https port.
+- Another tip to test via postman is to access API controller methods using the following http port (http://localhost:49615). By default the solution is pointing to the https port.
 
 ![http port](https://github.com/nmaia/AspNetCoreWebApi/blob/master/Docs/Images/http-https-port.png)
 
