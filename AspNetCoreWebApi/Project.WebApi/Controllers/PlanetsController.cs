@@ -200,7 +200,7 @@ namespace Project.WebApi.Controllers
         /// <param name="model">PlanetForPostViewModel model</param>
         /// <returns>HttpStatusCode</returns>
         /// <response code="200">It means the Planet was registred successfully</response>
-        /// <response code="400">If the item is null</response>
+        /// <response code="400">The planet already exists in database</response>
         /// <response code="500">Some internal error has occured in the server</response>
         [HttpPost]
         [Route("create")]
