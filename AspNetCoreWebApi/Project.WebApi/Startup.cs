@@ -6,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Project.IoC;
+using Project.WebApi.Helpers;
 using Project.WebApi.Mapper;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
@@ -78,6 +79,12 @@ namespace Project.WebApi
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 s.IncludeXmlComments(xmlPath);
             });
+
+            services.AddResponseCompression(options => {
+
+                options.Providers.Add<BrotliCompressorProvider>();
+                options.EnableForHttps = true;
+            });
         }
 
         /// <summary>
@@ -101,6 +108,8 @@ namespace Project.WebApi
 
                 s.SwaggerEndpoint("/swagger/v1/swagger.json", "AspNetCore 2.1 WebAPI V1");
             });
+
+            app.UseResponseCompression();
 
             app.UseMvc();
         }
