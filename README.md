@@ -21,7 +21,7 @@ A sample project using Asp Net Core 2.1 WebApi and EF Core.
 - EntityFramework Core;
 - SQL Server Express;
 
-## Things should be improved
+## The following topics should be improved
 
 - Indentify more use cases to provide more unit tests;
 - Include an integration test to check the availability of the external API;
